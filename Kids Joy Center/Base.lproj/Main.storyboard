@@ -1,26 +1,213 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AFQ-r2-TiD">
+    <device id="ipad9_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Vk7-Vc-xrf">
+            <objects>
+                <navigationController id="AFQ-r2-TiD" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KWa-Fc-Nnl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="lQ5-f3-ds8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jO1-mq-BTL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1247" y="854"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Kids_Joy_Center" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntn-Qx-Eq0">
+                                <rect key="frame" x="99" y="214" width="235" height="195"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="195" id="OfE-Ki-IQu"/>
+                                    <constraint firstAttribute="width" constant="235" id="ZRt-t2-pWb"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="game_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nRI-qw-Spz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fV5-Vk-GzL">
+                                <rect key="frame" x="389" y="214" width="235" height="195"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="235" id="Dy5-Sh-W9I"/>
+                                    <constraint firstAttribute="height" constant="195" id="emk-Sl-rLf"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="game_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dm3-vj-7TD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wlo-3S-qeG">
+                                <rect key="frame" x="699" y="214" width="235" height="195"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="195" id="eJ8-Bg-zym"/>
+                                    <constraint firstAttribute="width" constant="235" id="hrg-zF-iPS"/>
+                                </constraints>
+                                <state key="normal" title="Popping"/>
+                                <connections>
+                                    <action selector="game_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gK7-01-JyN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ih-KK-fSz">
+                                <rect key="frame" x="379.5" y="466" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="Pae-2n-HMM"/>
+                                    <constraint firstAttribute="height" constant="75" id="osz-g3-bwk"/>
+                                </constraints>
+                                <state key="normal" title="Easy" backgroundImage="easy"/>
+                                <connections>
+                                    <action selector="game_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TEN-hm-Qjv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLf-vt-NI5">
+                                <rect key="frame" x="474.5" y="466" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="9y1-Ud-UPz"/>
+                                    <constraint firstAttribute="height" constant="75" id="NTe-fF-W8F"/>
+                                </constraints>
+                                <state key="normal" title="Mediujm" backgroundImage="medium"/>
+                                <connections>
+                                    <action selector="game_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t0M-1B-0EC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6W8-TJ-Bnx">
+                                <rect key="frame" x="437" y="579" width="150" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="CPV-qG-nd9"/>
+                                    <constraint firstAttribute="height" constant="90" id="nKK-P9-URT"/>
+                                </constraints>
+                                <state key="normal" title="PLAY"/>
+                                <connections>
+                                    <action selector="play_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ivI-W2-NQP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAp-km-L2g">
+                                <rect key="frame" x="569.5" y="466" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="ewu-8c-lHH"/>
+                                    <constraint firstAttribute="height" constant="75" id="yE8-Vi-Mhq"/>
+                                </constraints>
+                                <state key="normal" title="Hard" backgroundImage="hard"/>
+                                <connections>
+                                    <action selector="game_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jma-Qt-NVq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="fV5-Vk-GzL" firstAttribute="leading" secondItem="ntn-Qx-Eq0" secondAttribute="trailing" constant="55" id="ENp-2I-X4w"/>
+                            <constraint firstItem="fV5-Vk-GzL" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="150" id="FkY-6e-vS9"/>
+                            <constraint firstItem="ntn-Qx-Eq0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="150" id="HaX-5w-5cI"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6W8-TJ-Bnx" secondAttribute="bottom" constant="99" id="Swy-Vy-7iU"/>
+                            <constraint firstItem="wlo-3S-qeG" firstAttribute="leading" secondItem="fV5-Vk-GzL" secondAttribute="trailing" constant="75" id="ald-CU-1vi"/>
+                            <constraint firstItem="5ih-KK-fSz" firstAttribute="top" secondItem="fV5-Vk-GzL" secondAttribute="bottom" constant="57" id="czQ-nE-8lX"/>
+                            <constraint firstItem="kAp-km-L2g" firstAttribute="leading" secondItem="sLf-vt-NI5" secondAttribute="trailing" constant="20" id="dWQ-mV-dta"/>
+                            <constraint firstItem="wlo-3S-qeG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="150" id="e3M-AD-ajd"/>
+                            <constraint firstItem="sLf-vt-NI5" firstAttribute="leading" secondItem="5ih-KK-fSz" secondAttribute="trailing" constant="20" id="fOF-XI-vJt"/>
+                            <constraint firstItem="sLf-vt-NI5" firstAttribute="top" secondItem="fV5-Vk-GzL" secondAttribute="bottom" constant="57" id="g6v-kb-2jQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wlo-3S-qeG" secondAttribute="trailing" constant="70" id="pLu-L1-yKU"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kAp-km-L2g" secondAttribute="bottom" constant="227" id="r1I-yX-Pwr"/>
+                            <constraint firstItem="6W8-TJ-Bnx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vpT-fU-XFw"/>
+                            <constraint firstItem="sLf-vt-NI5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="z4z-v7-JN2"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="E53-Ni-GBA"/>
+                    <connections>
+                        <outlet property="easy_lvl_btn" destination="5ih-KK-fSz" id="Pz2-57-uks"/>
+                        <outlet property="hard_lvl_btn" destination="kAp-km-L2g" id="m41-Vf-GGo"/>
+                        <outlet property="med_lvl_btn" destination="sLf-vt-NI5" id="fdV-qN-ciO"/>
+                        <outlet property="mem_btn" destination="ntn-Qx-Eq0" id="8LV-cU-G2J"/>
+                        <outlet property="play_btn" destination="6W8-TJ-Bnx" id="dI1-6K-iIs"/>
+                        <outlet property="pop_btn" destination="wlo-3S-qeG" id="6wm-kl-XGa"/>
+                        <outlet property="sort_btn" destination="fV5-Vk-GzL" id="RbV-zK-Dam"/>
+                        <segue destination="wTM-AP-lnY" kind="show" identifier="memory" id="77W-wq-BrS"/>
+                        <segue destination="2WT-CB-8mT" kind="show" identifier="sort" id="LjT-3a-y1W"/>
+                        <segue destination="3ER-rI-oAo" kind="show" identifier="pop" id="BWn-Fi-WJC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-332.2265625" y="854.6875"/>
+        </scene>
+        <!--MemoryVC-->
+        <scene sceneID="2yD-Tu-1Ep">
+            <objects>
+                <viewController id="wTM-AP-lnY" customClass="MemoryVC" customModule="Kids_Joy_Center" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="g3N-DN-Hgg"/>
+                        <viewControllerLayoutGuide type="bottom" id="etO-Q6-54u"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Yod-Yc-1d6">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Yd-lx-lcI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-908.20312499999989" y="1801.5625"/>
+        </scene>
+        <!--SortVC-->
+        <scene sceneID="VFv-bV-C5a">
+            <objects>
+                <viewController id="2WT-CB-8mT" customClass="SortVC" customModule="Kids_Joy_Center" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IbF-np-c6z"/>
+                        <viewControllerLayoutGuide type="bottom" id="MlA-vR-ZfS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EX1-f2-fOl">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uMG-06-BwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-199.21875" y="1809.375"/>
+        </scene>
+        <!--PopVC-->
+        <scene sceneID="kKV-9i-Qj9">
+            <objects>
+                <viewController id="3ER-rI-oAo" customClass="PopVC" customModule="Kids_Joy_Center" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Hdb-Mt-cU3"/>
+                        <viewControllerLayoutGuide type="bottom" id="Y6n-3t-QpY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ccq-0Q-6YE">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oXg-QS-igS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="458.78906249999994" y="1832.8125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="easy" width="516" height="516"/>
+        <image name="hard" width="250" height="250"/>
+        <image name="medium" width="300" height="300"/>
+    </resources>
 </document>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B506D0721E85F9A6006241B5 /* PopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B506D0711E85F9A6006241B5 /* PopVC.swift */; };
 		B52CB97E1E7AD954008C67E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB97D1E7AD954008C67E6 /* AppDelegate.swift */; };
 		B52CB9801E7AD954008C67E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB97F1E7AD954008C67E6 /* ViewController.swift */; };
 		B52CB9831E7AD954008C67E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B52CB9811E7AD954008C67E6 /* Main.storyboard */; };
@@ -14,6 +15,8 @@
 		B52CB9881E7AD954008C67E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B52CB9861E7AD954008C67E6 /* LaunchScreen.storyboard */; };
 		B52CB9931E7AD954008C67E6 /* Kids_Joy_CenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB9921E7AD954008C67E6 /* Kids_Joy_CenterTests.swift */; };
 		B52CB99E1E7AD954008C67E6 /* Kids_Joy_CenterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB99D1E7AD954008C67E6 /* Kids_Joy_CenterUITests.swift */; };
+		B52CB9AC1E7AF780008C67E6 /* MemoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */; };
+		B5EFB21E1E841BDB00227DC7 /* SortVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFB21D1E841BDA00227DC7 /* SortVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B506D0711E85F9A6006241B5 /* PopVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopVC.swift; sourceTree = "<group>"; };
 		B52CB97A1E7AD954008C67E6 /* Kids Joy Center.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kids Joy Center.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B52CB97D1E7AD954008C67E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B52CB97F1E7AD954008C67E6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +51,8 @@
 		B52CB9991E7AD954008C67E6 /* Kids Joy CenterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kids Joy CenterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B52CB99D1E7AD954008C67E6 /* Kids_Joy_CenterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_Joy_CenterUITests.swift; sourceTree = "<group>"; };
 		B52CB99F1E7AD954008C67E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryVC.swift; sourceTree = "<group>"; };
+		B5EFB21D1E841BDA00227DC7 /* SortVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,9 @@
 				B52CB97D1E7AD954008C67E6 /* AppDelegate.swift */,
 				B52CB97F1E7AD954008C67E6 /* ViewController.swift */,
 				B52CB9811E7AD954008C67E6 /* Main.storyboard */,
+				B506D0711E85F9A6006241B5 /* PopVC.swift */,
+				B5EFB21D1E841BDA00227DC7 /* SortVC.swift */,
+				B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */,
 				B52CB9841E7AD954008C67E6 /* Assets.xcassets */,
 				B52CB9861E7AD954008C67E6 /* LaunchScreen.storyboard */,
 				B52CB9891E7AD954008C67E6 /* Info.plist */,
@@ -262,7 +271,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5EFB21E1E841BDB00227DC7 /* SortVC.swift in Sources */,
 				B52CB9801E7AD954008C67E6 /* ViewController.swift in Sources */,
+				B52CB9AC1E7AF780008C67E6 /* MemoryVC.swift in Sources */,
+				B506D0721E85F9A6006241B5 /* PopVC.swift in Sources */,
 				B52CB97E1E7AD954008C67E6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,6 +526,7 @@
 				B52CB9A41E7AD954008C67E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B52CB9A51E7AD954008C67E6 /* Build configuration list for PBXNativeTarget "Kids Joy CenterTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +535,7 @@
 				B52CB9A71E7AD954008C67E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B52CB9A81E7AD954008C67E6 /* Build configuration list for PBXNativeTarget "Kids Joy CenterUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +544,7 @@
 				B52CB9AA1E7AD954008C67E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
