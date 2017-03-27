@@ -11,6 +11,9 @@ import UIKit
 class PopVC: UIViewController {
     
     var score = 0
+    var scoreviewHundreds = UIImageView()
+    var scoreViewTens = UIImageView()
+    var scoreViewOnes = UIImageView()
     
     var game_mode = 0
     // timer variables to be set
@@ -20,6 +23,7 @@ class PopVC: UIViewController {
     
     var timerCount = 0
     var times = Timer()
+    
     
     // image frames for timer images
     let seconds = UIImageView()
@@ -40,6 +44,11 @@ class PopVC: UIViewController {
     var container8 = UIView()
     var container9 = UIView()
     var container10 = UIView()
+    
+    var t = Timer()
+    
+    // x check
+    var xCheck = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,67 +71,6 @@ class PopVC: UIViewController {
         //timeImg.contentMode = .topLeft
         self.view.addSubview(timeImg)
         
-        //createBalloonContainers()
-        container1 = UIView(frame: CGRect(x: 0, y: 700, width: 100, height: 120))
-        container1.tag = 1
-        container1.backgroundColor = UIColor.red
-
-        self.view.addSubview(container1)
-        
-        container2 = UIView(frame: CGRect(x: 100, y: 700, width: 100, height: 120))
-        container2.tag = 2
-        container2.backgroundColor = UIColor.blue
-
-        self.view.addSubview(container2)
-        
-        container3 = UIView(frame: CGRect(x: 200, y: 700, width: 100, height: 120))
-        container3.tag = 3
-        container3.backgroundColor = UIColor.red
-
-        self.view.addSubview(container3)
-        
-        container4 = UIView(frame: CGRect(x: 300, y: 700, width: 100, height: 120))
-        container4.tag = 4
-        container4.backgroundColor = UIColor.blue
-
-        self.view.addSubview(container4)
-        
-        container5 = UIView(frame: CGRect(x: 400, y: 700, width: 100, height: 120))
-        container5.backgroundColor = UIColor.red
-
-        container5.tag = 5
-        self.view.addSubview(container5)
-        
-        container6 = UIView(frame: CGRect(x: 500, y: 700, width: 100, height: 120))
-        container6.backgroundColor = UIColor.blue
-
-        container6.tag = 6
-        self.view.addSubview(container6)
-        
-        container7 = UIView(frame: CGRect(x: 600, y: 700, width: 100, height: 120))
-        container7.backgroundColor = UIColor.red
-
-        container7.tag = 7
-        self.view.addSubview(container7)
-        
-        container8 = UIView(frame: CGRect(x: 700, y: 700, width: 100, height: 120))
-        container8.backgroundColor = UIColor.blue
-
-        container8.tag = 8
-        self.view.addSubview(container8)
-        
-        container9 = UIView(frame: CGRect(x: 800, y: 700, width: 100, height: 120))
-        container9.backgroundColor = UIColor.red
-
-        container9.tag = 9
-        self.view.addSubview(container9)
-        
-        container10 = UIView(frame: CGRect(x: 900, y: 700, width: 100, height: 120))
-        container10.backgroundColor = UIColor.blue
-
-        container10.tag = 10
-        self.view.addSubview(container10)
-        
         
         minutes.frame = CGRect(x: 160, y: 75, width: 45, height: 55)
         minutes.image = UIImage(named: "cartoon-number-\(timeMin)")
@@ -139,28 +87,24 @@ class PopVC: UIViewController {
         seconds.isUserInteractionEnabled = false
         self.view.addSubview(seconds)
         
-        //createBalloon()
+        let scoreImg = UIImageView(frame: CGRect(x: 630, y: 75, width: 150, height: 55))
+        scoreImg.image = UIImage(named: "score")
+        scoreImg.isUserInteractionEnabled = false
+        self.view.addSubview(scoreImg)
         
-        /*let testm = UIView(frame: CGRect(x: 50, y: 100, width: 105, height: 135))
-        let testBG = UIImageView(frame: testm.frame)
-        testBG.image = UIImage(named: "color5")
-        let testnum = UIImageView(frame: testm.frame)
         
-        testnum.frame.size.height = 60
-        testnum.frame.size.width = 45
-        testnum.center = testm.center
-        //testnum.frame.origin.y = testm.center.y
+        scoreviewHundreds = UIImageView(frame: CGRect(x: 790, y: 75, width: 45, height: 55))
+        self.view.addSubview(scoreviewHundreds)
         
-        testnum.image = UIImage(named: "cartoon-number-9")
-        testm.addSubview(testBG)
-        testm.addSubview(testnum)
-        testm.sendSubview(toBack: testBG)
+        scoreViewTens = UIImageView(frame: CGRect(x: 835, y: 75, width: 45, height: 55))
+        self.view.addSubview(scoreViewTens)
         
-        self.view.addSubview(testm)*/
+        scoreViewOnes = UIImageView(frame: CGRect(x: 880, y: 75, width: 45, height: 55))
+        self.view.addSubview(scoreViewOnes)
         
-        let t = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(createBalloon), userInfo: nil, repeats: true)
+        t = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(createBalloon), userInfo: nil, repeats: true)
         t.fire()
-        
+        //animateView(v: container5)
         
     }
 
@@ -169,80 +113,97 @@ class PopVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func createBalloonContainers() {
-        // instantiate each one so next to each other
-        container1 = UIView(frame: CGRect(x: 0, y: 900, width: 100, height: 120))
-        container1.backgroundColor = UIColor.red
-        container1.tag = 1
-        self.view.addSubview(container1)
-        
-        container2 = UIView(frame: CGRect(x: 100, y: 900, width: 100, height: 120))
-        container2.backgroundColor = UIColor.red
-        container2.tag = 2
-        self.view.addSubview(container2)
-        
-        container3 = UIView(frame: CGRect(x: 200, y: 900, width: 100, height: 120))
-        container3.backgroundColor = UIColor.red
-
-        container3.tag = 3
-        self.view.addSubview(container3)
-        
-        container4 = UIView(frame: CGRect(x: 300, y: 900, width: 100, height: 120))
-        container4.tag = 4
-        self.view.addSubview(container4)
-        
-        container5 = UIView(frame: CGRect(x: 400, y: 900, width: 100, height: 120))
-        container5.tag = 5
-        self.view.addSubview(container5)
-        
-        container6 = UIView(frame: CGRect(x: 500, y: 900, width: 100, height: 120))
-        container6.tag = 6
-        self.view.addSubview(container6)
-        
-        container7 = UIView(frame: CGRect(x: 600, y: 900, width: 100, height: 120))
-        container7.tag = 7
-        self.view.addSubview(container7)
-        
-        container8 = UIView(frame: CGRect(x: 700, y: 900, width: 100, height: 120))
-        container8.tag = 8
-        self.view.addSubview(container8)
-        
-        container9 = UIView(frame: CGRect(x: 800, y: 900, width: 100, height: 120))
-        container9.tag = 9
-        self.view.addSubview(container9)
-        
-        container10 = UIView(frame: CGRect(x: 900, y: 900, width: 100, height: 120))
-        container10.tag = 10
-        self.view.addSubview(container10)
-    }
-    
-    func balloonArrayMake() {
-        
-    }
-    
+//    func createBalloonContainers() {
+//        let yPos = 700
+//        // instantiate each one so next to each other
+//        container1 = UIView(frame: CGRect(x: 0, y: yPos, width: 100, height: 120))
+//        //container1.backgroundColor = UIColor.red
+//        container1.tag = 1
+//        self.view.addSubview(container1)
+//        
+//        container2 = UIView(frame: CGRect(x: 100, y: yPos, width: 100, height: 120))
+//        //container2.backgroundColor = UIColor.red
+//        container2.tag = 2
+//        self.view.addSubview(container2)
+//        
+//        container3 = UIView(frame: CGRect(x: 200, y: yPos, width: 100, height: 120))
+//        //container3.backgroundColor = UIColor.red
+//
+//        container3.tag = 3
+//        self.view.addSubview(container3)
+//        
+//        container4 = UIView(frame: CGRect(x: 300, y: yPos, width: 100, height: 120))
+//        container4.tag = 4
+//        self.view.addSubview(container4)
+//        
+//        container5 = UIView(frame: CGRect(x: 400, y: yPos, width: 100, height: 120))
+//        container5.tag = 5
+//        self.view.addSubview(container5)
+//        
+//        container6 = UIView(frame: CGRect(x: 500, y: yPos, width: 100, height: 120))
+//        container6.tag = 6
+//        self.view.addSubview(container6)
+//        
+//        container7 = UIView(frame: CGRect(x: 600, y: yPos, width: 100, height: 120))
+//        container7.tag = 7
+//        self.view.addSubview(container7)
+//        
+//        container8 = UIView(frame: CGRect(x: 700, y: yPos, width: 100, height: 120))
+//        container8.tag = 8
+//        self.view.addSubview(container8)
+//        
+//        container9 = UIView(frame: CGRect(x: 800, y: yPos, width: 100, height: 120))
+//        container9.tag = 9
+//        self.view.addSubview(container9)
+//        
+//        container10 = UIView(frame: CGRect(x: 900, y: yPos, width: 100, height: 120))
+//        container10.tag = 10
+//        self.view.addSubview(container10)
+//    }
     
     func createBalloon() {
         
         //print("score = \(score)")
         
-        let randContainer = Int(arc4random_uniform(10) + 1)
+        
+        
+        var xPos = Int(arc4random_uniform(9)) * 100
+        // this way we dont get duplicates
+        
+//        print("xChek = \(xCheck)")
+//        print("xpos = \(xPos)")
+        if(xPos == xCheck){
+            xPos = xPos + 100
+//            print("new xPos = \(xPos)")
+            if(xPos == 1000){
+                xPos = 0
+            }
+            xCheck = xPos
+        }
+        
+        
         let randColor = Int(arc4random_uniform(10) + 1)
         let randNum = Int(arc4random_uniform(9) + 1)
         //print("Rand: \(randNum)")
         
-        if let balloon = self.view.viewWithTag(randContainer) {
+        let balloon = UIView(frame: CGRect(x: xPos, y: 700, width: 100, height: 120))
+        
+        //if let balloon = self.view.viewWithTag(randContainer) {
 
             balloon.isHidden = false
         
         
         //let testm = UIView(frame: CGRect(x: 100, y: -120, width: 100, height: 120))
-        let testBG = UIImageView(frame: balloon.frame)
+            //let testBG = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 120))
+            //testBG.image = UIImage(named: "color2")
+            //let testnum = UIImageView(frame: CGRect(x: 40, y: 35, width: 35, height: 50))
+        let testBG = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 120))
         testBG.image = UIImage(named: "color\(randColor)")
-        let testnum = UIImageView(frame: balloon.frame)
+        let testnum = UIImageView(frame: CGRect(x: 40, y: 35, width: 35, height: 50))
         
-        testnum.frame.size.height = 50
-        testnum.frame.size.width = 35
-        testnum.center = balloon.center
+        //testnum.frame.size.height = 50
+        //testnum.frame.size.width = 35
+        //testnum.center = balloon.center
         //testnum.frame.origin.y = testm.center.y
         
         testnum.image = UIImage(named: "cartoon-number-\(randNum)")
@@ -255,13 +216,13 @@ class PopVC: UIViewController {
         //balloon.center.y += 1000
         //yepper = testm
         animateView(v: balloon)
-        }
+        
         
     }
     
     func animateView(v: UIView){
         
-        let speed = v.frame.origin.y/100
+        let speed = v.frame.origin.y/50
         
         UIView.animate(withDuration: TimeInterval(speed), delay: 0, options: .allowUserInteraction, animations: {
             v.frame.origin.y = -100
@@ -271,12 +232,14 @@ class PopVC: UIViewController {
     
     func startTimer() {
         // if game_lvl then set beginning state
+        
+        
         times = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){_ in
             // update the seconds
             self.checkForEnd()
             
             
-            
+            // time stuff
             let min = self.timerCount / 60
             
             let yep = self.timerCount%60
@@ -291,6 +254,14 @@ class PopVC: UIViewController {
             self.timerCount = self.timerCount - 1
             
             
+            // score stuff
+            let hunScore = self.score / 100
+            let onesScore = self.score % 10
+            let tensScore = self.score / 10
+            
+            self.scoreviewHundreds.image = UIImage(named: "cartoon-number-\(hunScore)")
+            self.scoreViewOnes.image = UIImage(named: "cartoon-number-\(onesScore)")
+            self.scoreViewTens.image = UIImage(named: "cartoon-number-\(tensScore)")
             
         }
         times.fire()
@@ -319,6 +290,7 @@ class PopVC: UIViewController {
     func checkForEnd() {
         if (timerCount == 0) {
             times.invalidate()
+            t.invalidate()
         }
     }
     
@@ -326,21 +298,21 @@ class PopVC: UIViewController {
     func setStartTime() {
         if game_mode == 10 {
             timerCount = 60
-            timeSec = 0
-            timeTenSec = 5
-            timeMin = 1
+//            timeSec = 0
+//            timeTenSec = 5
+//            timeMin = 1
         }
         if game_mode == 11 {
             timerCount = 45
-            timeSec = 5
-            timeTenSec = 4
-            timeMin = 1
+//            timeSec = 5
+//            timeTenSec = 4
+//            timeMin = 1
         }
         if game_mode == 12 {
             timerCount = 30
-            timeSec = 0
-            timeTenSec = 2
-            timeMin = 1
+//            timeSec = 0
+//            timeTenSec = 2
+//            timeMin = 1
         }
     }
     /*

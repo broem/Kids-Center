@@ -11,6 +11,12 @@ import GameplayKit
 
 class MemoryVC: UIViewController {
     
+    
+    var score = 0
+    var scoreviewHundreds = UIImageView()
+    var scoreViewTens = UIImageView()
+    var scoreViewOnes = UIImageView()
+    
     var game_mode = 0
     var gridSize = 0
     var taggem = 0
@@ -87,6 +93,22 @@ class MemoryVC: UIViewController {
         seconds.frame = CGRect(x: 272, y: 75, width: 45, height: 55)
         seconds.image = UIImage(named: "cartoon-number-\(timeSec)")
         self.view.addSubview(seconds)
+        
+        let scoreImg = UIImageView(frame: CGRect(x: 630, y: 75, width: 150, height: 55))
+        scoreImg.image = UIImage(named: "score")
+        scoreImg.isUserInteractionEnabled = false
+        self.view.addSubview(scoreImg)
+        
+        
+        scoreviewHundreds = UIImageView(frame: CGRect(x: 790, y: 75, width: 45, height: 55))
+        self.view.addSubview(scoreviewHundreds)
+        
+        scoreViewTens = UIImageView(frame: CGRect(x: 835, y: 75, width: 45, height: 55))
+        self.view.addSubview(scoreViewTens)
+        
+        scoreViewOnes = UIImageView(frame: CGRect(x: 880, y: 75, width: 45, height: 55))
+        self.view.addSubview(scoreViewOnes)
+        
         
         if game_mode == 10 {
             gridSize = 3
@@ -231,6 +253,15 @@ class MemoryVC: UIViewController {
             self.tenSec.image = UIImage(named: "cartoon-number-\(tens)")
             self.minutes.image = UIImage(named: "cartoon-number-\(min)")
             self.timerCount = self.timerCount - 1
+            
+            // score stuff
+            let hunScore = self.score / 100
+            let onesScore = self.score % 10
+            let tensScore = self.score / 10
+            
+            self.scoreviewHundreds.image = UIImage(named: "cartoon-number-\(hunScore)")
+            self.scoreViewOnes.image = UIImage(named: "cartoon-number-\(onesScore)")
+            self.scoreViewTens.image = UIImage(named: "cartoon-number-\(tensScore)")
             
             
             
