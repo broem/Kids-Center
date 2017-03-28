@@ -86,7 +86,9 @@
                                     <constraint firstAttribute="width" constant="75" id="9y1-Ud-UPz"/>
                                     <constraint firstAttribute="height" constant="75" id="NTe-fF-W8F"/>
                                 </constraints>
-                                <state key="normal" title="Mediujm" backgroundImage="medium"/>
+                                <state key="normal" title="Mediujm" backgroundImage="medium">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="game_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t0M-1B-0EC"/>
                                 </connections>
@@ -108,7 +110,9 @@
                                     <constraint firstAttribute="width" constant="75" id="ewu-8c-lHH"/>
                                     <constraint firstAttribute="height" constant="75" id="yE8-Vi-Mhq"/>
                                 </constraints>
-                                <state key="normal" title="Hard" backgroundImage="hard"/>
+                                <state key="normal" title="Hard" backgroundImage="hard">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="game_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jma-Qt-NVq"/>
                                 </connections>
@@ -144,7 +148,6 @@
                         <segue destination="wTM-AP-lnY" kind="show" identifier="memory" id="77W-wq-BrS"/>
                         <segue destination="2WT-CB-8mT" kind="show" identifier="sort" id="LjT-3a-y1W"/>
                         <segue destination="3ER-rI-oAo" kind="show" identifier="pop" id="BWn-Fi-WJC"/>
-                        <segue destination="y1B-Yr-dTu" kind="presentation" identifier="popup" id="gcl-AY-mGm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

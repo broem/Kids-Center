@@ -222,6 +222,7 @@ class SortVC: UIViewController {
         for btn in buttonArray {
             btn.removeFromSuperview()
         }
+        buttonArray.removeAll()
     }
     
     func createLandAreas() {
@@ -561,12 +562,17 @@ class SortVC: UIViewController {
     }
 
     func restart() {
+        xloc = 0
+        yloc = 75
+        score = 0
         removeImg()
         setStartTime()
         startTimer()
         createImgs()
         displayInitial()
-        score = 0
+        
+        sortImg.removeAll()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
