@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import AVFoundation
 import GameplayKit
 
 class MemoryVC: UIViewController {
     
+    var cheerPlayer = AVAudioPlayer()
     
     var score = 0
     var scoreviewHundreds = UIImageView()
@@ -53,12 +55,25 @@ class MemoryVC: UIViewController {
     
     var times = Timer()
     
+    var victoryScore = 0
+    
+    var scoreTimer = Timer()
+    
     var numToCompare = "0"
     var lastClicked = -1
     var lastButton = UIButton()
     
+    // score calculating
+    var scoreStartTime = 0
+    var scoreEndTime = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        
+    
 
         // Do any additional setup after loading the view.
         let bgImg = UIImageView(frame: self.view.bounds)
@@ -94,19 +109,19 @@ class MemoryVC: UIViewController {
         seconds.image = UIImage(named: "cartoon-number-\(timeSec)")
         self.view.addSubview(seconds)
         
-        let scoreImg = UIImageView(frame: CGRect(x: 630, y: 75, width: 150, height: 55))
+        let scoreImg = UIImageView(frame: CGRect(x: 690, y: 75, width: 150, height: 55))
         scoreImg.image = UIImage(named: "score")
         scoreImg.isUserInteractionEnabled = false
         self.view.addSubview(scoreImg)
         
         
-        scoreviewHundreds = UIImageView(frame: CGRect(x: 790, y: 75, width: 45, height: 55))
+        scoreviewHundreds = UIImageView(frame: CGRect(x: 850, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreviewHundreds)
         
-        scoreViewTens = UIImageView(frame: CGRect(x: 835, y: 75, width: 45, height: 55))
+        scoreViewTens = UIImageView(frame: CGRect(x: 895, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreViewTens)
         
-        scoreViewOnes = UIImageView(frame: CGRect(x: 880, y: 75, width: 45, height: 55))
+        scoreViewOnes = UIImageView(frame: CGRect(x: 940, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreViewOnes)
         
         
@@ -128,6 +143,8 @@ class MemoryVC: UIViewController {
         
         let maxSize = arraySize / 2
         
+        print("max size: \(maxSize)")
+        
         for i in 1...10 {
             let imgToAdd = UIImage(named: "\(i)")
             imgToAdd?.accessibilityIdentifier = "\(i)"
@@ -136,9 +153,10 @@ class MemoryVC: UIViewController {
         }
         // shuffle the images
         randomGameImg = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: randomGameImg) as! [UIImage]
+        let ok = randomGameImg.count
+        print("array size count: \(ok)")
         
-        
-        for i in 1...maxSize {
+        for i in 0...maxSize - 1 {
             
             //let anIm = i + 1
             // fill it twice since were matching
@@ -158,11 +176,24 @@ class MemoryVC: UIViewController {
         print("game lvl = \(game_mode)")
         
         generateBoard()
+        
+        let audioPath = Bundle.main.path(forResource: "cheer", ofType: "mp3")
+        
+        do{
+            cheerPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioPath!))
+        }
+        catch{
+            
+        }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        print("game lvl = \(game_mode)")
+    func setupButtons() {
+        
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        print("game lvl = \(game_mode)")
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -192,6 +223,7 @@ class MemoryVC: UIViewController {
     }
 
     func questionClicked (_ sender: UIButton) {
+        //scoreStartTime = 0
         print("sender: \(sender.tag)")
         sender.setBackgroundImage(shuffledArray[sender.tag], for: .normal)
         sender.isUserInteractionEnabled = false
@@ -202,19 +234,47 @@ class MemoryVC: UIViewController {
             lastClicked =  sender.tag
             lastButton = sender
             numToCompare = imgsAreTheSame!
+            self.scoreStartTime = 0
+            scoreTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){_ in
+                //self.scoreStartTime = 0
+                self.scoreStartTime = self.scoreStartTime + 1
+            }
+            
         }
         
         else if numToCompare == imgsAreTheSame {
             // both of these should remain unclickable
-            print("this actually works damn")
+            //print("this actually works damn")
+            
+            print("Score timer: \(scoreStartTime)")
+            scoreTimer.invalidate()
             numToCompare = "0"
             lastClicked = -1
+            // play cheer sound
+            cheerPlayer.play()
+            //let timeBetweenGuesses = scoreEndTime - scoreStartTime
+            if (scoreStartTime <= 3) {
+                scoreStartTime = 0
+                score = score + 5
+            }
+            else if (scoreStartTime <= 7) {
+                scoreStartTime = 0
+                score = score + 4
+            }
+            else {
+                scoreStartTime = 0
+                score = score + 3
+            }
+            victoryScore = victoryScore + 1
+            checkVictory()
+            
         }
         else {
             
             print("waiting...")
             
             numToCompare = imgsAreTheSame!
+            scoreStartTime = 0
            
             lastButton.isUserInteractionEnabled = true
             gameButton.isUserInteractionEnabled = true
@@ -227,6 +287,7 @@ class MemoryVC: UIViewController {
             }
             
         }
+        scoreStartTime = 0
         print("Last Clicked = \(lastClicked)")
         print("Num To Compare = \(numToCompare)")
         print("Img are same? = \(imgsAreTheSame)")
@@ -257,7 +318,15 @@ class MemoryVC: UIViewController {
             // score stuff
             let hunScore = self.score / 100
             let onesScore = self.score % 10
-            let tensScore = self.score / 10
+            var tensScore = 0
+            if self.score > 100 {
+                let div = self.score / 100
+                tensScore = div / 10
+                
+            }
+            else {
+                tensScore = self.score / 10
+            }
             
             self.scoreviewHundreds.image = UIImage(named: "cartoon-number-\(hunScore)")
             self.scoreViewOnes.image = UIImage(named: "cartoon-number-\(onesScore)")
@@ -273,6 +342,35 @@ class MemoryVC: UIViewController {
     func checkForEnd() {
         if (timerCount == 0) {
             times.invalidate()
+            scoreTimer.invalidate()
+            let alert = UIAlertController(title: "Loser", message: "You've lost, would you like to play again?", preferredStyle: .alert)
+            let myAction = UIAlertAction(title: "OK", style: .default, handler: { action in self.checkVictory()})
+            let second = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
+            
+            alert.addAction(myAction)
+            alert.addAction(second)
+            present(alert, animated: true, completion: nil)
+            
+            
+            }
+    }
+    
+    func checkVictory() {
+        if game_mode == 10 {
+            if victoryScore == 6 {
+                
+            }
+        }
+        if game_mode == 11 {
+            if victoryScore == 8 {
+                // send home, store score
+            }
+            
+        }
+        if game_mode == 12 {
+            if victoryScore == 10 {
+                
+            }
         }
     }
     
@@ -297,6 +395,16 @@ class MemoryVC: UIViewController {
             timeMin = 1
         }
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "homeScreen" {
+            if segue.destination is MemoryVC {
+                //sendMem.game_mode = isModeClicked
+            }
+        }
+    }
+
     /*
     // MARK: - Navigation
 

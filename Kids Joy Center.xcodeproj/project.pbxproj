@@ -16,6 +16,7 @@
 		B52CB9931E7AD954008C67E6 /* Kids_Joy_CenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB9921E7AD954008C67E6 /* Kids_Joy_CenterTests.swift */; };
 		B52CB99E1E7AD954008C67E6 /* Kids_Joy_CenterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB99D1E7AD954008C67E6 /* Kids_Joy_CenterUITests.swift */; };
 		B52CB9AC1E7AF780008C67E6 /* MemoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */; };
+		B5C1C09B1E89801D00B36AE2 /* cheer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B5C1C09A1E89801D00B36AE2 /* cheer.mp3 */; };
 		B5EFB21E1E841BDB00227DC7 /* SortVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFB21D1E841BDA00227DC7 /* SortVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		B52CB99D1E7AD954008C67E6 /* Kids_Joy_CenterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_Joy_CenterUITests.swift; sourceTree = "<group>"; };
 		B52CB99F1E7AD954008C67E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryVC.swift; sourceTree = "<group>"; };
+		B5C1C09A1E89801D00B36AE2 /* cheer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cheer.mp3; sourceTree = "<group>"; };
 		B5EFB21D1E841BDA00227DC7 /* SortVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +111,7 @@
 				B506D0711E85F9A6006241B5 /* PopVC.swift */,
 				B5EFB21D1E841BDA00227DC7 /* SortVC.swift */,
 				B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */,
+				B5C1C09A1E89801D00B36AE2 /* cheer.mp3 */,
 				B52CB9841E7AD954008C67E6 /* Assets.xcassets */,
 				B52CB9861E7AD954008C67E6 /* LaunchScreen.storyboard */,
 				B52CB9891E7AD954008C67E6 /* Info.plist */,
@@ -246,6 +249,7 @@
 			files = (
 				B52CB9881E7AD954008C67E6 /* LaunchScreen.storyboard in Resources */,
 				B52CB9851E7AD954008C67E6 /* Assets.xcassets in Resources */,
+				B5C1C09B1E89801D00B36AE2 /* cheer.mp3 in Resources */,
 				B52CB9831E7AD954008C67E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

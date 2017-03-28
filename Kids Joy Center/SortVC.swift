@@ -11,6 +11,11 @@ import GameplayKit
 
 class SortVC: UIViewController {
     
+    var score = 0
+    var scoreviewHundreds = UIImageView()
+    var scoreViewTens = UIImageView()
+    var scoreViewOnes = UIImageView()
+    
     var game_mode = 0
     
     var buttonDrag = UIPanGestureRecognizer()
@@ -24,6 +29,7 @@ class SortVC: UIViewController {
     var land2 = UIView()
     var sea = UIView()
     var sea2 = UIView()
+    var air = UIView()
 
     var isInBounds = 0
     
@@ -46,6 +52,10 @@ class SortVC: UIViewController {
     var timerCount = 0
     
     var times = Timer()
+    
+    var victoryScore = 0
+    var scoreTimer = Timer()
+    var scoreStartTime = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,15 +63,15 @@ class SortVC: UIViewController {
         // load up the array to display later
         print("game mode: \(game_mode)")
         
-        for i in 1...3 {
-            for j in 1...5 {
-                let imgMe = UIImage(named: "\(i)-\(j)")
-                imgMe?.accessibilityIdentifier = "\(i)-\(j)"
-                sortImg.append(imgMe!)
-            }
-        }
-        
-        sortImg = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: sortImg) as! [UIImage]
+//        for i in 1...3 {
+//            for j in 1...5 {
+//                let imgMe = UIImage(named: "\(i)-\(j)")
+//                imgMe?.accessibilityIdentifier = "\(i)-\(j)"
+//                sortImg.append(imgMe!)
+//            }
+//        }
+//        
+//        sortImg = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: sortImg) as! [UIImage]
         
         
         // Do any additional setup after loading the view.
@@ -80,43 +90,43 @@ class SortVC: UIViewController {
         imgContainer.backgroundColor = UIColor.blue
         imgContainer.alpha = 0.5
         self.view.addSubview(imgContainer)
-        
-        // setup imgviews across the top 80x80
-        for i in 1...12 {
-            
-            buttonIcon = UIButton(frame: CGRect(x: xloc, y: yloc, width: 80, height: 80))
-            buttonIcon.setBackgroundImage(sortImg[i], for: .normal)
-            buttonIcon.tag = i
-            buttonIcon.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(movingButton(sender:))))
-            //icon = displayInitial(icon)
-            //icon.isUserInteractionEnabled = true
-            //icon.addGestureRecognizer(tapGesture)
-            if game_mode == 10 {
-                if i == 1 || i == 2 || i == 11 || i == 12{
-                buttonIcon.isHidden = true
-                }
-            }
-            if game_mode == 11 {
-                if i == 1 || i == 12 {
-                    buttonIcon.isHidden = true
-                }
-            }
-            
-            //buttonIcon.addTarget(self,
-                            //action: #selector(drag(control:event:)),
-                             //for: UIControlEvents.touchDragInside)
-            //buttonIcon.addTarget(self,
-              //               action: #selector(drag(control:event:)),
-                //             for: [UIControlEvents.touchDragExit,
-                  //                 UIControlEvents.touchDragOutside])
-            //icon.isHidden = true
-            xloc = xloc + 82
-            self.view.addSubview(buttonIcon)
-            self.view.bringSubview(toFront: buttonIcon)
-            
-            
-            
-        }
+        createImgs()
+//        // setup imgviews across the top 80x80
+//        for i in 1...12 {
+//            
+//            buttonIcon = UIButton(frame: CGRect(x: xloc, y: yloc, width: 80, height: 80))
+//            buttonIcon.setBackgroundImage(sortImg[i], for: .normal)
+//            buttonIcon.tag = i
+//            buttonIcon.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(movingButton(sender:))))
+//            //icon = displayInitial(icon)
+//            //icon.isUserInteractionEnabled = true
+//            //icon.addGestureRecognizer(tapGesture)
+//            if game_mode == 10 {
+//                if i == 1 || i == 2 || i == 11 || i == 12{
+//                buttonIcon.isHidden = true
+//                }
+//            }
+//            if game_mode == 11 {
+//                if i == 1 || i == 12 {
+//                    buttonIcon.isHidden = true
+//                }
+//            }
+//            
+//            //buttonIcon.addTarget(self,
+//                            //action: #selector(drag(control:event:)),
+//                             //for: UIControlEvents.touchDragInside)
+//            //buttonIcon.addTarget(self,
+//              //               action: #selector(drag(control:event:)),
+//                //             for: [UIControlEvents.touchDragExit,
+//                  //                 UIControlEvents.touchDragOutside])
+//            //icon.isHidden = true
+//            xloc = xloc + 82
+//            self.view.addSubview(buttonIcon)
+//            self.view.bringSubview(toFront: buttonIcon)
+//            
+//            
+//            
+//        }
         //buttonIcon.addGestureRecognizer(buttonDrag)
         let timeImg = UIImageView(frame: CGRect(x: 0, y: yspot, width: 150, height: 55))
         setStartTime()
@@ -141,13 +151,88 @@ class SortVC: UIViewController {
         seconds.image = UIImage(named: "cartoon-number-\(timeSec)")
         self.view.addSubview(seconds)
         
+        let scoreImg = UIImageView(frame: CGRect(x: 690, y: 715, width: 150, height: 55))
+        scoreImg.image = UIImage(named: "score")
+        scoreImg.isUserInteractionEnabled = false
+        self.view.addSubview(scoreImg)
         
+        
+        scoreviewHundreds = UIImageView(frame: CGRect(x: 850, y: 715, width: 45, height: 55))
+        self.view.addSubview(scoreviewHundreds)
+        
+        scoreViewTens = UIImageView(frame: CGRect(x: 895, y: 715, width: 45, height: 55))
+        self.view.addSubview(scoreViewTens)
+        
+        scoreViewOnes = UIImageView(frame: CGRect(x: 940, y: 715, width: 45, height: 55))
+        self.view.addSubview(scoreViewOnes)
+        
+        scoreTime()
         
         createLandAreas()
         //self.view.addGestureRecognizer(buttonDrag)
         //displayInitial()
         
         
+    }
+    
+    func createImgs() {
+        
+        for i in 1...3 {
+            for j in 1...5 {
+                let imgMe = UIImage(named: "\(i)-\(j)")
+                imgMe?.accessibilityIdentifier = "\(i)-\(j)"
+                sortImg.append(imgMe!)
+            }
+            
+        }
+        
+        sortImg = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: sortImg) as! [UIImage]
+        
+        // setup imgviews across the top 80x80
+        for i in 1...12 {
+            
+            buttonIcon = UIButton(frame: CGRect(x: xloc, y: yloc, width: 80, height: 80))
+            buttonIcon.setBackgroundImage(sortImg[i], for: .normal)
+            buttonIcon.tag = i
+            buttonIcon.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(movingButton(sender:))))
+            //icon = displayInitial(icon)
+            //icon.isUserInteractionEnabled = true
+            //icon.addGestureRecognizer(tapGesture)
+            if game_mode == 10 {
+                if i == 1 || i == 2 || i == 11 || i == 12{
+                    buttonIcon.isHidden = true
+                }
+            }
+            if game_mode == 11 {
+                if i == 1 || i == 12 {
+                    buttonIcon.isHidden = true
+                }
+            }
+            
+            //buttonIcon.addTarget(self,
+            //action: #selector(drag(control:event:)),
+            //for: UIControlEvents.touchDragInside)
+            //buttonIcon.addTarget(self,
+            //               action: #selector(drag(control:event:)),
+            //             for: [UIControlEvents.touchDragExit,
+            //                 UIControlEvents.touchDragOutside])
+            //icon.isHidden = true
+            xloc = xloc + 82
+            self.view.addSubview(buttonIcon)
+            self.view.bringSubview(toFront: buttonIcon)
+            
+            
+            
+        }
+        
+        
+    }
+    
+    func removeImg() {
+        for i in 1...12 {
+            self.view.viewWithTag(i)?.removeFromSuperview()
+        }
+        sortImg.removeAll()
     }
     
     func createLandAreas() {
@@ -174,6 +259,10 @@ class SortVC: UIViewController {
         //sea2.backgroundColor = UIColor.green
         //sea2.alpha = 0.5
         self.view.addSubview(sea2)
+        
+        air = UIView(frame: CGRect(x: 0, y: 175, width: 1024, height: 257))
+        air.isUserInteractionEnabled = false
+        self.view.addSubview(air)
     }
     
     //func imgTap(gesture: UIGestureRecognizer) {
@@ -203,6 +292,13 @@ class SortVC: UIViewController {
         
         }
     }
+    
+    func scoreTime() {
+        scoreTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){_ in
+            self.scoreStartTime = self.scoreStartTime + 1
+        }
+
+    }
 
     // hit test
     override func didReceiveMemoryWarning() {
@@ -219,24 +315,13 @@ class SortVC: UIViewController {
         var ogCenter = CGPoint()
         
        
-        //let buttSpot = CGRect(x: newLoc.x, y: newLoc.y, width: 80, height: 80)
-        //self.buttonIcon.frame = buttSpot
-        //let location = sender.location(in: view)
-        //let velocity = sender.velocity(in: view)
-        //let translation = sender.translation(in: view)
         
         
         if let button = view.viewWithTag(buttonTag) as? UIButton {
             if count == 0 {
                 ogLoc = button.frame }
-        /*if sender.state == .began {
-            print("Gesture began")
-        } else if sender.state == .changed {
-            button.center = CGPoint(x: button.x + translation.x, y: button.y + translation.y)
-            print("Gesture is changing")
-        } else if sender.state == .ended {
-            print("Gesture ended")
-        }*/
+            
+            
             if sender.state == .began {
                ogCenter = button.center // store old button center
             } else if sender.state == .failed || sender.state == .cancelled {
@@ -251,11 +336,33 @@ class SortVC: UIViewController {
                 
                 
                 if isInBounds == 1 {
+                    // do scoring here
+                    
                     print("ok it works")
                     let location = sender.location(in: view) // get pan location
                     button.center = location
                     button.isEnabled = false
                     isInBounds = 0
+                    
+                    if scoreStartTime <= 2 {
+                        score = score + 5
+                        scoreStartTime = 0
+                        victoryScore += 1
+                    }
+                    else if scoreStartTime <= 4 {
+                        score = score + 4
+                        scoreStartTime = 0
+                        victoryScore += 1
+                    }
+                    else {
+                        score = score + 3
+                        scoreStartTime = 0
+                        victoryScore += 1
+                    }
+                    print("Vic Score = \(victoryScore)")
+                    checkVic()
+                    
+                    
                 }
                 
                 else {
@@ -305,7 +412,39 @@ class SortVC: UIViewController {
         }, completion: nil)
     }
 
+    func checkVic() {
+        if game_mode == 10 {
+            if victoryScore == 8 {
+                // save score
+               victoryAlert()
+            }
+        }
+        if game_mode == 11 {
+            if victoryScore == 10 {
+                // save score
+                victoryAlert()
+            }
+        }
+        if game_mode == 12 {
+            if victoryScore == 12 {
+                //save score
+                victoryAlert()
+            }
+        }
+        
+    }
     
+    func victoryAlert() {
+        times.invalidate()
+        scoreTimer.invalidate()
+        let alert = UIAlertController(title: "Winner!", message: "You did it! Would you like to play again?", preferredStyle: .alert)
+        let myAction = UIAlertAction(title: "Yes", style: .default, handler: { action in self.restart()})
+        let second = UIAlertAction(title: "No", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
+        
+        alert.addAction(myAction)
+        alert.addAction(second)
+        present(alert, animated: true, completion: nil)
+    }
     
     func buttonLocCheck(_ button: UIButton) {
         let buttTag = button.tag
@@ -313,7 +452,9 @@ class SortVC: UIViewController {
         
         if buttonCheck == "1-1" || buttonCheck == "1-2" || buttonCheck == "1-3" || buttonCheck == "1-4" || buttonCheck == "1-5" {
             // air
-            isInBounds = 1
+            if air.frame.contains(button.center) || air.frame.contains(button.center) {
+                isInBounds = 1
+            }
         }
         if buttonCheck == "2-1" || buttonCheck == "2-2" || buttonCheck == "2-3" || buttonCheck == "2-4" || buttonCheck == "2-5" {
             // sea
@@ -353,6 +494,23 @@ class SortVC: UIViewController {
             self.timerCount = self.timerCount - 1
             
             
+            // score stuff
+            let hunScore = self.score / 100
+            let onesScore = self.score % 10
+            var tensScore = 0
+            if self.score > 100 {
+                let div = self.score / 100
+                tensScore = div / 10
+                
+            }
+            else {
+                tensScore = self.score / 10
+            }
+            
+            self.scoreviewHundreds.image = UIImage(named: "cartoon-number-\(hunScore)")
+            self.scoreViewOnes.image = UIImage(named: "cartoon-number-\(onesScore)")
+            self.scoreViewTens.image = UIImage(named: "cartoon-number-\(tensScore)")
+            
             
         }
         times.fire()
@@ -387,8 +545,20 @@ class SortVC: UIViewController {
         }
     }
 
+    func restart() {
+        removeImg()
+        setStartTime()
+        startTimer()
+        createImgs()
+    }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "homeScreen" {
+            if segue.destination is SortVC {
+                //sendMem.game_mode = isModeClicked
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 

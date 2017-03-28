@@ -163,6 +163,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="view" destination="Yod-Yc-1d6" id="M70-Lt-w4a"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="homeScreen" id="uzQ-hp-Dw1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Yd-lx-lcI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -181,6 +185,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="homeScreen" id="qdY-QT-Cxe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uMG-06-BwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -199,6 +206,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="homeScreen" id="bQE-k4-xl9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oXg-QS-igS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -210,4 +220,7 @@
         <image name="hard" width="250" height="250"/>
         <image name="medium" width="300" height="300"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="uzQ-hp-Dw1"/>
+    </inferredMetricsTieBreakers>
 </document>

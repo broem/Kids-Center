@@ -10,6 +10,12 @@ import UIKit
 
 class PopVC: UIViewController {
     
+    var balloonDiff = 0
+    var difficultySpeed = 0.0
+    var stopSec = 0
+    
+    var lastXPos = 0
+    
     var score = 0
     var scoreviewHundreds = UIImageView()
     var scoreViewTens = UIImageView()
@@ -87,25 +93,32 @@ class PopVC: UIViewController {
         seconds.isUserInteractionEnabled = false
         self.view.addSubview(seconds)
         
-        let scoreImg = UIImageView(frame: CGRect(x: 630, y: 75, width: 150, height: 55))
+        let scoreImg = UIImageView(frame: CGRect(x: 690, y: 75, width: 150, height: 55))
         scoreImg.image = UIImage(named: "score")
         scoreImg.isUserInteractionEnabled = false
         self.view.addSubview(scoreImg)
         
         
-        scoreviewHundreds = UIImageView(frame: CGRect(x: 790, y: 75, width: 45, height: 55))
+        scoreviewHundreds = UIImageView(frame: CGRect(x: 850, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreviewHundreds)
         
-        scoreViewTens = UIImageView(frame: CGRect(x: 835, y: 75, width: 45, height: 55))
+        scoreViewTens = UIImageView(frame: CGRect(x: 895, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreViewTens)
         
-        scoreViewOnes = UIImageView(frame: CGRect(x: 880, y: 75, width: 45, height: 55))
+        scoreViewOnes = UIImageView(frame: CGRect(x: 940, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreViewOnes)
         
-        t = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(createBalloon), userInfo: nil, repeats: true)
-        t.fire()
+        startTime()
+//        t = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(createBalloon), userInfo: nil, repeats: true)
+//        t.fire()
         //animateView(v: container5)
         
+    }
+    
+    func startTime() {
+        
+        t = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(createBalloon), userInfo: nil, repeats: true)
+        t.fire()
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,58 +126,21 @@ class PopVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-//    func createBalloonContainers() {
-//        let yPos = 700
-//        // instantiate each one so next to each other
-//        container1 = UIView(frame: CGRect(x: 0, y: yPos, width: 100, height: 120))
-//        //container1.backgroundColor = UIColor.red
-//        container1.tag = 1
-//        self.view.addSubview(container1)
-//        
-//        container2 = UIView(frame: CGRect(x: 100, y: yPos, width: 100, height: 120))
-//        //container2.backgroundColor = UIColor.red
-//        container2.tag = 2
-//        self.view.addSubview(container2)
-//        
-//        container3 = UIView(frame: CGRect(x: 200, y: yPos, width: 100, height: 120))
-//        //container3.backgroundColor = UIColor.red
-//
-//        container3.tag = 3
-//        self.view.addSubview(container3)
-//        
-//        container4 = UIView(frame: CGRect(x: 300, y: yPos, width: 100, height: 120))
-//        container4.tag = 4
-//        self.view.addSubview(container4)
-//        
-//        container5 = UIView(frame: CGRect(x: 400, y: yPos, width: 100, height: 120))
-//        container5.tag = 5
-//        self.view.addSubview(container5)
-//        
-//        container6 = UIView(frame: CGRect(x: 500, y: yPos, width: 100, height: 120))
-//        container6.tag = 6
-//        self.view.addSubview(container6)
-//        
-//        container7 = UIView(frame: CGRect(x: 600, y: yPos, width: 100, height: 120))
-//        container7.tag = 7
-//        self.view.addSubview(container7)
-//        
-//        container8 = UIView(frame: CGRect(x: 700, y: yPos, width: 100, height: 120))
-//        container8.tag = 8
-//        self.view.addSubview(container8)
-//        
-//        container9 = UIView(frame: CGRect(x: 800, y: yPos, width: 100, height: 120))
-//        container9.tag = 9
-//        self.view.addSubview(container9)
-//        
-//        container10 = UIView(frame: CGRect(x: 900, y: yPos, width: 100, height: 120))
-//        container10.tag = 10
-//        self.view.addSubview(container10)
-//    }
     
     func createBalloon() {
         
+        let randomPercent = Int(arc4random_uniform(100) + 1)
         //print("score = \(score)")
-        
+        if(game_mode == 11 && randomPercent <= 50 && stopSec == 0) {
+            stopSec = 1
+            createBalloon()
+        }
+        if(game_mode == 12 && randomPercent <= 33 && stopSec == 0) {
+            stopSec = 1
+            createBalloon()
+            createBalloon()
+            
+        }
         
         
         var xPos = Int(arc4random_uniform(9)) * 100
@@ -183,10 +159,10 @@ class PopVC: UIViewController {
         
         
         let randColor = Int(arc4random_uniform(10) + 1)
-        let randNum = Int(arc4random_uniform(9) + 1)
+        let randNum = Int(arc4random_uniform(UInt32(balloonDiff)) + 1)
         //print("Rand: \(randNum)")
         
-        let balloon = UIView(frame: CGRect(x: xPos, y: 700, width: 100, height: 120))
+        let balloon = UIView(frame: CGRect(x: xPos, y: 900, width: 100, height: 120))
         
         //if let balloon = self.view.viewWithTag(randContainer) {
 
@@ -216,13 +192,13 @@ class PopVC: UIViewController {
         //balloon.center.y += 1000
         //yepper = testm
         animateView(v: balloon)
-        
+        stopSec = 0
         
     }
     
     func animateView(v: UIView){
         
-        let speed = v.frame.origin.y/50
+        let speed = v.frame.origin.y/CGFloat(difficultySpeed)
         
         UIView.animate(withDuration: TimeInterval(speed), delay: 0, options: .allowUserInteraction, animations: {
             v.frame.origin.y = -100
@@ -257,7 +233,15 @@ class PopVC: UIViewController {
             // score stuff
             let hunScore = self.score / 100
             let onesScore = self.score % 10
-            let tensScore = self.score / 10
+            var tensScore = 0
+            if self.score > 100 {
+                let div = self.score / 100
+                tensScore = div / 10
+                
+            }
+            else {
+                tensScore = self.score / 10
+            }
             
             self.scoreviewHundreds.image = UIImage(named: "cartoon-number-\(hunScore)")
             self.scoreViewOnes.image = UIImage(named: "cartoon-number-\(onesScore)")
@@ -276,7 +260,7 @@ class PopVC: UIViewController {
         for i in 2...self.view.subviews.count {
             if self.view.subviews[i-1].layer.presentation()!.hitTest(touchLocation) != nil {
                 print("touched subview \(i)")
-                if i >= 8 {
+                if i >= 12 {
                 self.view.subviews[i-1].isHidden = true
                     score = score + self.view.subviews[i-1].tag
                 }
@@ -291,28 +275,56 @@ class PopVC: UIViewController {
         if (timerCount == 0) {
             times.invalidate()
             t.invalidate()
+            let alert = UIAlertController(title: "Game Over!", message: "The game is over, would you like to play again?", preferredStyle: .alert)
+            let myAction = UIAlertAction(title: "OK", style: .default, handler: { action in self.restart()})
+            let second = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
+            
+            alert.addAction(myAction)
+            alert.addAction(second)
+            present(alert, animated: true, completion: nil)
+
         }
     }
     
+    func restart() {
+        setStartTime()
+        startTimer()
+        startTime()
+        score = 0
+    }
     
     func setStartTime() {
         if game_mode == 10 {
             timerCount = 60
+            balloonDiff = 9
+            difficultySpeed = 30.0
 //            timeSec = 0
 //            timeTenSec = 5
 //            timeMin = 1
         }
         if game_mode == 11 {
             timerCount = 45
+            balloonDiff = 7
+            difficultySpeed = 50.0
 //            timeSec = 5
 //            timeTenSec = 4
 //            timeMin = 1
         }
         if game_mode == 12 {
             timerCount = 30
+            balloonDiff = 5
+            difficultySpeed = 100.0
 //            timeSec = 0
 //            timeTenSec = 2
 //            timeMin = 1
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "homeScreen" {
+            if segue.destination is PopVC {
+                //sendMem.game_mode = isModeClicked
+            }
         }
     }
     /*

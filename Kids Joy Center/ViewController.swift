@@ -51,8 +51,43 @@ class ViewController: UIViewController {
         
         
         play_btn.setImage(UIImage(named: "PlayButton")!, for: .normal)
+        self.navigationController?.title = "Kids Joy Center"
+        self.title = "Kids Joy Center"
+        
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+        //button.setBackgroundImage(#imageLiteral(resourceName: "cart"), for: UIControlState.normal)
+        button.setTitle("High Scores", for: UIControlState.normal)
+        button.setTitleColor(UIColor.blue, for: .normal)
+        button.addTarget(self, action: #selector(popUp), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         
     }
+    
+    func popUp() {
+        
+        print("adding pop up")
+        
+        let newVC = UIViewController()
+        newVC.view.backgroundColor = UIColor.blue
+        
+        newVC.modalPresentationStyle = .popover
+        newVC.modalTransitionStyle = .crossDissolve
+        
+        newVC.preferredContentSize = CGSize(width: 300, height: 300)
+        
+        let fr = CGRect(x: 300, y: 300, width: 1, height: 1)
+        let midView = UIView(frame: fr)
+        self.view.addSubview(midView)
+        
+        let pop = newVC.popoverPresentationController
+        pop?.sourceView = midView
+        
+        show(newVC, sender: midView)
+        
+        
+    }
+
     
     override func viewDidAppear(_ animated: Bool) {
 //        print("game: \(isGameClicked)")
