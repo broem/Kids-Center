@@ -18,6 +18,8 @@ class SortVC: UIViewController {
     
     var saveScores = [Scores]()
     
+    var buttonArray = [UIButton]()
+    
     var game_mode = 0
     
     var buttonDrag = UIPanGestureRecognizer()
@@ -93,11 +95,10 @@ class SortVC: UIViewController {
         imgContainer.backgroundColor = UIColor.blue
         imgContainer.alpha = 0.5
         self.view.addSubview(imgContainer)
-        createImgs()
+        
 
         let timeImg = UIImageView(frame: CGRect(x: 0, y: yspot, width: 150, height: 55))
-        setStartTime()
-        startTimer()
+        
         
         timeImg.image = UIImage(named: "time")
         //timeImg.contentMode = .topLeft
@@ -152,6 +153,13 @@ class SortVC: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        createImgs()
+        displayInitial()
+        setStartTime()
+        startTimer()
+    }
+    
     func createImgs() {
         
         for i in 1...3 {
@@ -195,6 +203,7 @@ class SortVC: UIViewController {
             //                 UIControlEvents.touchDragOutside])
             //icon.isHidden = true
             xloc = xloc + 82
+            buttonArray.append(buttonIcon)
             self.view.addSubview(buttonIcon)
             self.view.bringSubview(toFront: buttonIcon)
             
@@ -206,10 +215,13 @@ class SortVC: UIViewController {
     }
     
     func removeImg() {
-        for i in 1...12 {
-            self.view.viewWithTag(i)?.removeFromSuperview()
+//        for i in 1...12 {
+//            self.view.viewWithTag(i)?.removeFromSuperview()
+//        }
+//        sortImg.removeAll()
+        for btn in buttonArray {
+            btn.removeFromSuperview()
         }
-        sortImg.removeAll()
     }
     
     func createLandAreas() {
@@ -512,6 +524,14 @@ class SortVC: UIViewController {
     func checkForEnd() {
         if (timerCount == 0) {
             times.invalidate()
+            scoreTimer.invalidate()
+            let alert = UIAlertController(title: "LOSER!", message: "You lose! Would you like to play again?", preferredStyle: .alert)
+            let myAction = UIAlertAction(title: "Yes", style: .default, handler: { action in self.restart()})
+            let second = UIAlertAction(title: "No", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
+            
+            alert.addAction(myAction)
+            alert.addAction(second)
+            present(alert, animated: true, completion: nil)
         }
     }
     
@@ -545,6 +565,7 @@ class SortVC: UIViewController {
         setStartTime()
         startTimer()
         createImgs()
+        displayInitial()
         score = 0
     }
     
