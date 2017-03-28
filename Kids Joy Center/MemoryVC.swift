@@ -14,6 +14,8 @@ class MemoryVC: UIViewController {
     
     var cheerPlayer = AVAudioPlayer()
     
+    var saveScores = [Scores]()
+    
     var score = 0
     var scoreviewHundreds = UIImageView()
     var scoreViewTens = UIImageView()
@@ -38,6 +40,10 @@ class MemoryVC: UIViewController {
     var gameQImg = [UIButton]()
     var gameAnimalImg = [UIImage]()
     var randomGameImg = [UIImage]()
+    
+    var buttonArray = [UIButton]()
+    
+    var gameName = "Memory "
     
     var qImg = UIImage(named: "question")
     
@@ -70,11 +76,7 @@ class MemoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    override func viewDidAppear(_ animated: Bool) {
         
-    
-
         // Do any additional setup after loading the view.
         let bgImg = UIImageView(frame: self.view.bounds)
         bgImg.image = UIImage(named: "background")
@@ -85,7 +87,16 @@ class MemoryVC: UIViewController {
         
         self.navigationController?.title = "Memory Game!"
         self.title = "Memory Game!"
-    
+        
+        if game_mode == 10 {
+            gameName += "Easy"
+        }
+        if game_mode == 11 {
+            gameName += "Medium"
+        }
+        if game_mode == 12 {
+            gameName += "Hard"
+        }
         let timeImg = UIImageView(frame: CGRect(x: 0, y: 75, width: 150, height: 55))
         setStartTime()
         startTimer()
@@ -123,20 +134,41 @@ class MemoryVC: UIViewController {
         
         scoreViewOnes = UIImageView(frame: CGRect(x: 940, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreViewOnes)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+
+        setupButtons()
+
+        print("game lvl = \(game_mode)")
         
+        generateBoard()
         
+        let audioPath = Bundle.main.path(forResource: "cheer", ofType: "mp3")
+        
+        do{
+            cheerPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioPath!))
+        }
+        catch{
+            
+        }
+    }
+    
+    func setupButtons() {
         if game_mode == 10 {
             gridSize = 3
             adjustable = 120
+            //gameName += "Easy"
         }
         
         if game_mode == 11 {
             gridSize = 4
             adjustable = 60
+            //gameName += "Medium"
         }
         
         if game_mode == 12 {
             gridSize = 5
+            //gameName += "Hard"
         }
         
         arraySize = 4 * gridSize
@@ -171,29 +203,9 @@ class MemoryVC: UIViewController {
         
         // random shuffle
         shuffledArray = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: gameAnimalImg) as! [UIImage]
-        
-        
-        print("game lvl = \(game_mode)")
-        
-        generateBoard()
-        
-        let audioPath = Bundle.main.path(forResource: "cheer", ofType: "mp3")
-        
-        do{
-            cheerPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioPath!))
-        }
-        catch{
-            
-        }
     }
     
-    func setupButtons() {
-        
-    }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        print("game lvl = \(game_mode)")
-//    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -206,11 +218,12 @@ class MemoryVC: UIViewController {
             for _ in 1...gridSize {
                 gameButton = UIButton(frame: CGRect(x: xStart, y: yStart, width: 120 , height: 120))
                 gameButton.setBackgroundImage(qImg, for: UIControlState.normal)
-                
+                //print("tagged: \(taggem)")
                 gameButton.tag = taggem
                 
                 gameButton.addTarget(self, action: #selector(questionClicked(_:)), for: UIControlEvents.touchUpInside)
                 
+                buttonArray.append(gameButton)
                 self.view.addSubview(gameButton)
             
                 xStart = xStart + 120
@@ -221,7 +234,23 @@ class MemoryVC: UIViewController {
             
         }
     }
-
+    
+    func restartBoard() {
+//        taggem = 0
+//        for _ in 1...4 {
+//            for _ in 1...gridSize {
+//                
+//                gameButton.viewWithTag(taggem)?.sendSubview(toBack: self.view)
+//                gameButton.viewWithTag(taggem)?.removeFromSuperview()
+//                taggem += 1
+//            }
+//        }
+        for btn in buttonArray {
+            btn.removeFromSuperview()
+        }
+    }
+    
+    
     func questionClicked (_ sender: UIButton) {
         //scoreStartTime = 0
         print("sender: \(sender.tag)")
@@ -343,9 +372,9 @@ class MemoryVC: UIViewController {
         if (timerCount == 0) {
             times.invalidate()
             scoreTimer.invalidate()
-            let alert = UIAlertController(title: "Loser", message: "You've lost, would you like to play again?", preferredStyle: .alert)
-            let myAction = UIAlertAction(title: "OK", style: .default, handler: { action in self.checkVictory()})
-            let second = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
+            let alert = UIAlertController(title: "You LOSE!", message: "You've lost, would you like to play again?", preferredStyle: .alert)
+            let myAction = UIAlertAction(title: "Yes", style: .default, handler: { action in self.checkVictory()})
+            let second = UIAlertAction(title: "No", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
             
             alert.addAction(myAction)
             alert.addAction(second)
@@ -355,21 +384,51 @@ class MemoryVC: UIViewController {
             }
     }
     
+    func winAlert() {
+        times.invalidate()
+        scoreTimer.invalidate()
+        let alert = UIAlertController(title: "You Win!", message: "You've won, would you like to play again?", preferredStyle: .alert)
+        let myAction = UIAlertAction(title: "Yes", style: .default, handler: { action in self.restart()})
+        let second = UIAlertAction(title: "No", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
+        
+        alert.addAction(myAction)
+        alert.addAction(second)
+        present(alert, animated: true, completion: nil)
+
+        
+    }
+    
     func checkVictory() {
         if game_mode == 10 {
             if victoryScore == 6 {
-                
+               let ok = Scores(scores: score, rest: gameName)
+                saveScores.append(ok)
+                let scoreData = NSKeyedArchiver.archivedData(withRootObject: saveScores)
+                UserDefaults.standard.set(scoreData, forKey: "savedScores")
+                UserDefaults.standard.synchronize()
+                winAlert()
             }
         }
         if game_mode == 11 {
             if victoryScore == 8 {
                 // send home, store score
+                let ok = Scores(scores: score, rest: gameName)
+                saveScores.append(ok)
+                let scoreData = NSKeyedArchiver.archivedData(withRootObject: saveScores)
+                UserDefaults.standard.set(scoreData, forKey: "savedScores")
+                UserDefaults.standard.synchronize()
+                winAlert()
             }
             
         }
         if game_mode == 12 {
             if victoryScore == 10 {
-                
+                let ok = Scores(scores: score, rest: gameName)
+                saveScores.append(ok)
+                let scoreData = NSKeyedArchiver.archivedData(withRootObject: saveScores)
+                UserDefaults.standard.set(scoreData, forKey: "savedScores")
+                UserDefaults.standard.synchronize()
+                winAlert()
             }
         }
     }
@@ -399,10 +458,24 @@ class MemoryVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "homeScreen" {
-            if segue.destination is MemoryVC {
+            if segue.destination is ViewController {
                 //sendMem.game_mode = isModeClicked
+                //sendScore.saveScores = saveScores
             }
         }
+    }
+    
+    func restart() {
+        score = 0
+        xStart = 210
+        yStart = 190
+        restartBoard()
+        setStartTime()
+        startTimer()
+        setupButtons()
+        generateBoard()
+        
+        
     }
 
     /*

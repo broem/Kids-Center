@@ -16,6 +16,8 @@ class SortVC: UIViewController {
     var scoreViewTens = UIImageView()
     var scoreViewOnes = UIImageView()
     
+    var saveScores = [Scores]()
+    
     var game_mode = 0
     
     var buttonDrag = UIPanGestureRecognizer()
@@ -36,6 +38,7 @@ class SortVC: UIViewController {
     var xloc = 0
     var yloc = 75
     
+    var gameName = "Sort "
     
     // image frames for timer images
     let seconds = UIImageView()
@@ -91,43 +94,7 @@ class SortVC: UIViewController {
         imgContainer.alpha = 0.5
         self.view.addSubview(imgContainer)
         createImgs()
-//        // setup imgviews across the top 80x80
-//        for i in 1...12 {
-//            
-//            buttonIcon = UIButton(frame: CGRect(x: xloc, y: yloc, width: 80, height: 80))
-//            buttonIcon.setBackgroundImage(sortImg[i], for: .normal)
-//            buttonIcon.tag = i
-//            buttonIcon.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(movingButton(sender:))))
-//            //icon = displayInitial(icon)
-//            //icon.isUserInteractionEnabled = true
-//            //icon.addGestureRecognizer(tapGesture)
-//            if game_mode == 10 {
-//                if i == 1 || i == 2 || i == 11 || i == 12{
-//                buttonIcon.isHidden = true
-//                }
-//            }
-//            if game_mode == 11 {
-//                if i == 1 || i == 12 {
-//                    buttonIcon.isHidden = true
-//                }
-//            }
-//            
-//            //buttonIcon.addTarget(self,
-//                            //action: #selector(drag(control:event:)),
-//                             //for: UIControlEvents.touchDragInside)
-//            //buttonIcon.addTarget(self,
-//              //               action: #selector(drag(control:event:)),
-//                //             for: [UIControlEvents.touchDragExit,
-//                  //                 UIControlEvents.touchDragOutside])
-//            //icon.isHidden = true
-//            xloc = xloc + 82
-//            self.view.addSubview(buttonIcon)
-//            self.view.bringSubview(toFront: buttonIcon)
-//            
-//            
-//            
-//        }
-        //buttonIcon.addGestureRecognizer(buttonDrag)
+
         let timeImg = UIImageView(frame: CGRect(x: 0, y: yspot, width: 150, height: 55))
         setStartTime()
         startTimer()
@@ -165,6 +132,16 @@ class SortVC: UIViewController {
         
         scoreViewOnes = UIImageView(frame: CGRect(x: 940, y: 715, width: 45, height: 55))
         self.view.addSubview(scoreViewOnes)
+        
+        if game_mode == 10 {
+            gameName += "Easy"
+        }
+        if game_mode == 11 {
+            gameName += "Medium"
+        }
+        if game_mode == 12 {
+            gameName += "Hard"
+        }
         
         scoreTime()
         
@@ -416,18 +393,33 @@ class SortVC: UIViewController {
         if game_mode == 10 {
             if victoryScore == 8 {
                 // save score
+                let ok = Scores(scores: score, rest: gameName)
+                saveScores.append(ok)
+                let scoreData = NSKeyedArchiver.archivedData(withRootObject: saveScores)
+                UserDefaults.standard.set(scoreData, forKey: "savedScores")
+                UserDefaults.standard.synchronize()
                victoryAlert()
             }
         }
         if game_mode == 11 {
             if victoryScore == 10 {
                 // save score
+                let ok = Scores(scores: score, rest: gameName)
+                saveScores.append(ok)
+                let scoreData = NSKeyedArchiver.archivedData(withRootObject: saveScores)
+                UserDefaults.standard.set(scoreData, forKey: "savedScores")
+                UserDefaults.standard.synchronize()
                 victoryAlert()
             }
         }
         if game_mode == 12 {
             if victoryScore == 12 {
                 //save score
+                let ok = Scores(scores: score, rest: gameName)
+                saveScores.append(ok)
+                let scoreData = NSKeyedArchiver.archivedData(withRootObject: saveScores)
+                UserDefaults.standard.set(scoreData, forKey: "savedScores")
+                UserDefaults.standard.synchronize()
                 victoryAlert()
             }
         }
@@ -530,18 +522,21 @@ class SortVC: UIViewController {
             timeSec = 0
             timeTenSec = 5
             timeMin = 1
+            //gameName += "Easy"
         }
         if game_mode == 11 {
             timerCount = 45
             timeSec = 5
             timeTenSec = 4
             timeMin = 1
+            //gameName += "Medium"
         }
         if game_mode == 12 {
             timerCount = 30
             timeSec = 0
             timeTenSec = 2
             timeMin = 1
+            //gameName += "Hard"
         }
     }
 
@@ -550,6 +545,7 @@ class SortVC: UIViewController {
         setStartTime()
         startTimer()
         createImgs()
+        score = 0
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

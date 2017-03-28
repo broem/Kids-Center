@@ -17,6 +17,8 @@
 		B52CB99E1E7AD954008C67E6 /* Kids_Joy_CenterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB99D1E7AD954008C67E6 /* Kids_Joy_CenterUITests.swift */; };
 		B52CB9AC1E7AF780008C67E6 /* MemoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */; };
 		B5C1C09B1E89801D00B36AE2 /* cheer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B5C1C09A1E89801D00B36AE2 /* cheer.mp3 */; };
+		B5C1C09D1E8A165F00B36AE2 /* Pops.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C1C09C1E8A165F00B36AE2 /* Pops.swift */; };
+		B5C1C0A11E8A2AA800B36AE2 /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C1C0A01E8A2AA800B36AE2 /* Scores.swift */; };
 		B5EFB21E1E841BDB00227DC7 /* SortVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFB21D1E841BDA00227DC7 /* SortVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +56,8 @@
 		B52CB99F1E7AD954008C67E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryVC.swift; sourceTree = "<group>"; };
 		B5C1C09A1E89801D00B36AE2 /* cheer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cheer.mp3; sourceTree = "<group>"; };
+		B5C1C09C1E8A165F00B36AE2 /* Pops.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pops.swift; sourceTree = "<group>"; };
+		B5C1C0A01E8A2AA800B36AE2 /* Scores.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scores.swift; sourceTree = "<group>"; };
 		B5EFB21D1E841BDA00227DC7 /* SortVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,7 +111,9 @@
 			children = (
 				B52CB97D1E7AD954008C67E6 /* AppDelegate.swift */,
 				B52CB97F1E7AD954008C67E6 /* ViewController.swift */,
+				B5C1C0A01E8A2AA800B36AE2 /* Scores.swift */,
 				B52CB9811E7AD954008C67E6 /* Main.storyboard */,
+				B5C1C09C1E8A165F00B36AE2 /* Pops.swift */,
 				B506D0711E85F9A6006241B5 /* PopVC.swift */,
 				B5EFB21D1E841BDA00227DC7 /* SortVC.swift */,
 				B52CB9AB1E7AF780008C67E6 /* MemoryVC.swift */,
@@ -278,6 +284,8 @@
 				B5EFB21E1E841BDB00227DC7 /* SortVC.swift in Sources */,
 				B52CB9801E7AD954008C67E6 /* ViewController.swift in Sources */,
 				B52CB9AC1E7AF780008C67E6 /* MemoryVC.swift in Sources */,
+				B5C1C0A11E8A2AA800B36AE2 /* Scores.swift in Sources */,
+				B5C1C09D1E8A165F00B36AE2 /* Pops.swift in Sources */,
 				B506D0721E85F9A6006241B5 /* PopVC.swift in Sources */,
 				B52CB97E1E7AD954008C67E6 /* AppDelegate.swift in Sources */,
 			);

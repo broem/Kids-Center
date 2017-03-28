@@ -14,6 +14,8 @@ class PopVC: UIViewController {
     var difficultySpeed = 0.0
     var stopSec = 0
     
+    var bonusCheck = 0
+    
     var lastXPos = 0
     
     var score = 0
@@ -30,6 +32,8 @@ class PopVC: UIViewController {
     var timerCount = 0
     var times = Timer()
     
+    var saveScores = [Scores]()
+    var gameName = "POP! "
     
     // image frames for timer images
     let seconds = UIImageView()
@@ -52,6 +56,19 @@ class PopVC: UIViewController {
     var container10 = UIView()
     
     var t = Timer()
+    
+    var firstTime = 0
+    
+    var bonusTimer = Timer()
+    var bonusRand = Int()
+    
+    var deathTimer = Timer()
+    var deathRand = Int()
+    var deathCheck = 0
+    var deathFirst = 0
+    
+    
+    var bonusSecCount = Timer()
     
     // x check
     var xCheck = 0
@@ -108,6 +125,16 @@ class PopVC: UIViewController {
         scoreViewOnes = UIImageView(frame: CGRect(x: 940, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreViewOnes)
         
+        if game_mode == 10 {
+            gameName += "Easy"
+        }
+        if game_mode == 11 {
+            gameName += "Medium"
+        }
+        if game_mode == 12 {
+            gameName += "Hard"
+        }
+        
         startTime()
 //        t = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(createBalloon), userInfo: nil, repeats: true)
 //        t.fire()
@@ -117,8 +144,14 @@ class PopVC: UIViewController {
     
     func startTime() {
         
+        bonusRand = Int(arc4random_uniform(25) + 20)
+        deathRand = Int(arc4random_uniform(25) + 20)
+        
         t = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(createBalloon), userInfo: nil, repeats: true)
+        bonusTimer = Timer.scheduledTimer(timeInterval: TimeInterval(bonusRand), target: self, selector: #selector(createBonusBalloon), userInfo: nil, repeats: true)
+        deathTimer = Timer.scheduledTimer(timeInterval: TimeInterval(bonusRand), target: self, selector: #selector(createDeath), userInfo: nil, repeats: true)
         t.fire()
+        bonusTimer.fire()
     }
 
     override func didReceiveMemoryWarning() {
@@ -126,6 +159,72 @@ class PopVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func createBonusBalloon() {
+        
+        if firstTime == 1 {
+
+        let xPos = Int(arc4random_uniform(9)) * 100
+        // this way we dont get duplicates
+        let randColor = Int(arc4random_uniform(10) + 1)
+        
+        let balloon = UIView(frame: CGRect(x: xPos, y: 900, width: 100, height: 120))
+        
+        balloon.isHidden = false
+        
+        let testBG = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 120))
+        testBG.image = UIImage(named: "color\(randColor)")
+        let testnum = UIImageView(frame: CGRect(x: 40, y: 35, width: 35, height: 50))
+        
+        testnum.image = UIImage(named: "star")
+        balloon.addSubview(testBG)
+        balloon.addSubview(testnum)
+        balloon.sendSubview(toBack: testBG)
+        balloon.tag = 150
+        
+        self.view.addSubview(balloon)
+        difficultySpeed += 40
+        bonusCheck = 1
+        animateView(v: balloon)
+        }
+        else {
+            firstTime = 1
+        }
+        
+        //difficultySpeed -= 10
+    }
+    
+    func createDeath() {
+        if deathFirst == 1 {
+            
+            let xPos = Int(arc4random_uniform(9)) * 100
+            // this way we dont get duplicates
+            let randColor = Int(arc4random_uniform(10) + 1)
+            
+            let balloon = UIView(frame: CGRect(x: xPos, y: 900, width: 100, height: 120))
+            
+            balloon.isHidden = false
+            
+            let testBG = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 120))
+            testBG.image = UIImage(named: "color\(randColor)")
+            let testnum = UIImageView(frame: CGRect(x: 40, y: 35, width: 35, height: 50))
+            
+            testnum.image = UIImage(named: "skull")
+            balloon.addSubview(testBG)
+            balloon.addSubview(testnum)
+            balloon.sendSubview(toBack: testBG)
+            balloon.tag = 200
+            
+            self.view.addSubview(balloon)
+            difficultySpeed -= 10
+            deathCheck = 1
+            animateView(v: balloon)
+        }
+        else {
+            deathFirst = 1
+        }
+
+        
+    }
     
     func createBalloon() {
         
@@ -146,8 +245,6 @@ class PopVC: UIViewController {
         var xPos = Int(arc4random_uniform(9)) * 100
         // this way we dont get duplicates
         
-//        print("xChek = \(xCheck)")
-//        print("xpos = \(xPos)")
         if(xPos == xCheck){
             xPos = xPos + 100
 //            print("new xPos = \(xPos)")
@@ -162,26 +259,14 @@ class PopVC: UIViewController {
         let randNum = Int(arc4random_uniform(UInt32(balloonDiff)) + 1)
         //print("Rand: \(randNum)")
         
-        let balloon = UIView(frame: CGRect(x: xPos, y: 900, width: 100, height: 120))
-        
-        //if let balloon = self.view.viewWithTag(randContainer) {
+        let balloon = UIView(frame: CGRect(x: xPos, y: 760, width: 100, height: 120))
 
             balloon.isHidden = false
-        
-        
-        //let testm = UIView(frame: CGRect(x: 100, y: -120, width: 100, height: 120))
-            //let testBG = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 120))
-            //testBG.image = UIImage(named: "color2")
-            //let testnum = UIImageView(frame: CGRect(x: 40, y: 35, width: 35, height: 50))
+
         let testBG = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 120))
         testBG.image = UIImage(named: "color\(randColor)")
         let testnum = UIImageView(frame: CGRect(x: 40, y: 35, width: 35, height: 50))
-        
-        //testnum.frame.size.height = 50
-        //testnum.frame.size.width = 35
-        //testnum.center = balloon.center
-        //testnum.frame.origin.y = testm.center.y
-        
+
         testnum.image = UIImage(named: "cartoon-number-\(randNum)")
         balloon.addSubview(testBG)
         balloon.addSubview(testnum)
@@ -189,8 +274,7 @@ class PopVC: UIViewController {
         balloon.tag = randNum
         
         self.view.addSubview(balloon)
-        //balloon.center.y += 1000
-        //yepper = testm
+
         animateView(v: balloon)
         stopSec = 0
         
@@ -203,11 +287,24 @@ class PopVC: UIViewController {
         UIView.animate(withDuration: TimeInterval(speed), delay: 0, options: .allowUserInteraction, animations: {
             v.frame.origin.y = -100
         }, completion: {_ in v.removeFromSuperview() })
+        
+        if bonusCheck == 1 {
+            difficultySpeed -= 40
+            bonusCheck = 0
+        }
+        if deathCheck == 1 {
+            difficultySpeed += 10
+            deathCheck = 0
+        }
+        
+        
     }
 
     
     func startTimer() {
         // if game_lvl then set beginning state
+        
+        
         
         
         times = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){_ in
@@ -262,7 +359,16 @@ class PopVC: UIViewController {
                 print("touched subview \(i)")
                 if i >= 12 {
                 self.view.subviews[i-1].isHidden = true
+                    if self.view.subviews[i-1].tag == 150 {
+                     // timer for 5 sec then change back
+                        difficultySpeed -= 20
+                    }
+                    else if self.view.subviews[i-1].tag == 200 {
+                        gameOverDude()
+                    }
+                    else {
                     score = score + self.view.subviews[i-1].tag
+                    }
                 }
             }
         }
@@ -271,10 +377,41 @@ class PopVC: UIViewController {
         
     }
     
+    func bonusFire() {
+        bonusSecCount =  Timer.scheduledTimer(withTimeInterval: 5, repeats: false){_ in
+            self.difficultySpeed += 20
+        }
+        bonusSecCount.fire()
+    }
+    
+    func gameOverDude() {
+        times.invalidate()
+        t.invalidate()
+        bonusTimer.invalidate()
+        deathTimer.invalidate()
+        let alert = UIAlertController(title: "YOU LOSE!!!", message: "You were killed by a death balloon, start over?", preferredStyle: .alert)
+        let myAction = UIAlertAction(title: "Yes", style: .default, handler: { action in self.restart()})
+        let second = UIAlertAction(title: "No", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
+        
+        alert.addAction(myAction)
+        alert.addAction(second)
+        present(alert, animated: true, completion: nil)
+    }
+    
     func checkForEnd() {
         if (timerCount == 0) {
             times.invalidate()
             t.invalidate()
+            bonusTimer.invalidate()
+            deathTimer.invalidate()
+            
+            // save score
+            let ok = Scores(scores: score, rest: gameName)
+            saveScores.append(ok)
+            let scoreData = NSKeyedArchiver.archivedData(withRootObject: saveScores)
+            UserDefaults.standard.set(scoreData, forKey: "savedScores")
+            UserDefaults.standard.synchronize()
+            
             let alert = UIAlertController(title: "Game Over!", message: "The game is over, would you like to play again?", preferredStyle: .alert)
             let myAction = UIAlertAction(title: "OK", style: .default, handler: { action in self.restart()})
             let second = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in self.performSegue(withIdentifier: "homeScreen", sender: self)});
@@ -297,7 +434,8 @@ class PopVC: UIViewController {
         if game_mode == 10 {
             timerCount = 60
             balloonDiff = 9
-            difficultySpeed = 30.0
+            difficultySpeed = 50.0
+            //gameName += "Easy"
 //            timeSec = 0
 //            timeTenSec = 5
 //            timeMin = 1
@@ -305,7 +443,8 @@ class PopVC: UIViewController {
         if game_mode == 11 {
             timerCount = 45
             balloonDiff = 7
-            difficultySpeed = 50.0
+            difficultySpeed = 80.0
+            //gameName += "Medium"
 //            timeSec = 5
 //            timeTenSec = 4
 //            timeMin = 1
@@ -314,6 +453,7 @@ class PopVC: UIViewController {
             timerCount = 30
             balloonDiff = 5
             difficultySpeed = 100.0
+            //gameName += "Hard"
 //            timeSec = 0
 //            timeTenSec = 2
 //            timeMin = 1
