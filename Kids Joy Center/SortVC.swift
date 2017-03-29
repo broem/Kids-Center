@@ -104,7 +104,10 @@ class SortVC: UIViewController {
         //timeImg.contentMode = .topLeft
         self.view.addSubview(timeImg)
         
-        
+        let behindNums = UIView(frame: CGRect(x: 150, y: yspot, width: 170, height: 55))
+        behindNums.backgroundColor = UIColor.black
+        behindNums.alpha = 0.5
+        self.view.addSubview(behindNums)
         
         
         minutes.frame = CGRect(x: 160, y: yspot, width: 45, height: 55)
@@ -123,6 +126,11 @@ class SortVC: UIViewController {
         scoreImg.image = UIImage(named: "score")
         scoreImg.isUserInteractionEnabled = false
         self.view.addSubview(scoreImg)
+        
+        let behindScore = UIView(frame: CGRect(x: 840, y: 715, width: 165, height: 55))
+        behindScore.backgroundColor = UIColor.black
+        behindScore.alpha = 0.5
+        self.view.addSubview(behindScore)
         
         
         scoreviewHundreds = UIImageView(frame: CGRect(x: 850, y: 715, width: 45, height: 55))

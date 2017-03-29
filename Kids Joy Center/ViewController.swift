@@ -69,12 +69,12 @@ class ViewController: UIViewController {
         
         popUp = UIView(frame: CGRect(x: -800, y: 210, width: 350, height: 350))
         
-        popTitle = UILabel(frame: CGRect(x: 145, y: 8, width: 200, height: 25))
+        popTitle = UILabel(frame: CGRect(x: 145, y: 8, width: 200, height: 40))
         
         popTitle.textColor = UIColor.white
-        popTitle.font = popTitle.font.withSize(16)
         popTitle.text = "High Scores!"
-        
+        popTitle.font = popTitle.font.withSize(16)
+        popTitle.font = UIFont(name: "System-System",size: 20.0)
         popLabel1 = UILabel(frame: CGRect(x: 23, y: 55, width: 200, height: 25))
         popLabel1.text = "1. ---"
         popLabel1.textColor = UIColor.white
@@ -98,10 +98,12 @@ class ViewController: UIViewController {
         
         popButton = UIButton(frame: CGRect(x: 145, y: 312, width: 100, height: 25))
         popButton.setTitle("Dismiss", for: .normal)
+        
         popButton.setTitleColor(UIColor.red, for: .normal)
+        //popButton.backgroundColor = UIColor.lightGray
         popButton.addTarget(self, action: #selector(popAway), for: .touchUpInside)
         popUp.backgroundColor = UIColor.blue
-        //popUp.alpha = 0.4
+        popUp.alpha = 0.8
         
         popUp.addSubview(popTitle)
         popUp.addSubview(popLabel1)

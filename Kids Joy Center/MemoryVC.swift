@@ -105,7 +105,10 @@ class MemoryVC: UIViewController {
         //timeImg.contentMode = .topLeft
         self.view.addSubview(timeImg)
         
-        
+        let behindNums = UIView(frame: CGRect(x: 150, y: 75, width: 170, height: 55))
+        behindNums.backgroundColor = UIColor.black
+        behindNums.alpha = 0.5
+        self.view.addSubview(behindNums)
         
         
         minutes.frame = CGRect(x: 160, y: 75, width: 45, height: 55)
@@ -125,6 +128,10 @@ class MemoryVC: UIViewController {
         scoreImg.isUserInteractionEnabled = false
         self.view.addSubview(scoreImg)
         
+        let behindScore = UIView(frame: CGRect(x: 840, y: 75, width: 165, height: 55))
+        behindScore.backgroundColor = UIColor.black
+        behindScore.alpha = 0.5
+        self.view.addSubview(behindScore)
         
         scoreviewHundreds = UIImageView(frame: CGRect(x: 850, y: 75, width: 45, height: 55))
         self.view.addSubview(scoreviewHundreds)
